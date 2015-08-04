@@ -1,0 +1,234 @@
+#pragma once
+#include "stdafx.h"
+
+// fixes
+#define FIX_INSERT_PLATFORM_EDITOR 0
+
+// enables
+#define ENABLE_BACKWARDS_JUMP 0
+#define ENABLE_PLATFORM_ROTATION 1
+#define ENABLE_USE_LAST_HORIZONTAL_HELPER_WALL_JUMP 0
+#define ENABLE_ANIMATION_BLENDING 0
+#define ENABLE_STATIC_GEOMETRY 0
+#define ENABLE_WALL_GRAB 0
+#define ENABLE_FORCE_RESPAWN 0
+
+// player
+#define WORLD_GRAVITY 80
+#define PLAYER_MAX_FALL_SPEED (WORLD_GRAVITY * 2)
+#define PLAYER_MAX_FALL_SPEED_CRASH (PLAYER_MAX_FALL_SPEED / 3)
+#define PLAYER_MAX_SLOPE_TOP_WALL_JUMP 80
+#define PLAYER_MAX_SLOPE (60)
+#define PLAYER_BODY_Y 2.1
+#define PLAYER_BODY_X 0.5
+#define PLAYER_BODY_Z PLAYER_BODY_X
+#define PLAYER_ANIM_FADE_SPEED 7.5f
+#define PLAYER_WALL_GRAB_OFFSET_Y 0.5
+#define PLAYER_WALL_GRAB_OFFSET_Z 0.6
+#define PLAYER_WALL_GRAB_TIME_FOR_ANOTHER_ONE 0.25
+#define PLAYER_TIME_TO_FORCE_RESPAWN 0.5
+#define FRAMES_PER_SECOND 120
+#define PLAYER_MOVEMENT_SPEED 18.5
+#define PLAYER_ICE_MOVEMENT_SPEED 22.5
+#define PLAYER_BEGIN_MOVEMENT_SPEED 0.5
+#define PLAYER_BEGIN_MOVEMENT_TIME 0.8
+#define PLAYER_SPEED_BASE_MODIFIER 1.38
+#define PLAYER_TIME_LENGTHY_JUMP 2.0                   
+
+#define PLAYER_JUMP_SPEED 30
+#define PLAYER_JUMP_SPEED_MODIFIER_LONG 3.2
+#define PLAYER_JUMP_NORMAL_TIME_INCREASE_HEIGHT 0.1
+#define PLAYER_TIME_BETWEEN_JUMPS 0.2
+#define PLAYER_VERTICAL_SPEED_INCREASE_SECOND 425
+#define PLAYER_MAX_COPY_TRAIL 8
+#define PLAYER_TIME_PER_COPY 0.4
+#define PLAYER_TIME_BETWEEN_COPY 0.04
+#define PLAYER_STAND_VELOCITY_Y_0_TIME 0.1
+
+// ice
+#define ICE_SLIDE_REDUCE_SECOND (PLAYER_MOVEMENT_SPEED * 0.75)
+#define ICE_MAX_SPEED (PLAYER_MOVEMENT_SPEED + 5)
+
+#define BREAKABLE_PLATFORM_TIME_TO_BREAK 0.75
+#define BREAKABLE_PLATFORM_TIME_TO_RECREATE 0.75
+#define BREAKABLE_PLATFORM_TIME_RECONSTRUCT 0.25
+
+#define WORLD_AABB_MARGIN 15
+#define WORLD_TIME_PER_UNIT 1.25
+
+#if ENABLE_BACKWARDS_JUMP
+#define PLAYER_JUMP_SPEED_MODIFIER_BACKWARDS 1.3
+#endif
+
+#define PLAYER_JUMP_SPEED_MODIFIER_NORMAL 2.5
+#define PLAYER_JUMP_SPEED_MODIFIER_WALL 2.0
+#define PLAYER_HIGH_JUMP_SPEED (btVector3(0, 6.75*3, PLAYER_MOVEMENT_SPEED) * PLAYER_SPEED_BASE_MODIFIER)
+// 4 is base speed, it gets increased while you keep pressing the jump button
+#define PLAYER_JUMP_SPEED_STATIC (btVector3(0, 4*3, 0)* PLAYER_SPEED_BASE_MODIFIER)
+#define PLAYER_JUMP_SPEED_MOVING (btVector3(0, 4*3, PLAYER_MOVEMENT_SPEED / 2 + 1)* PLAYER_SPEED_BASE_MODIFIER)
+//#define PLAYER_JUMP_SPEED_ADD_Y_SECOND (110 * 3 * PLAYER_SPEED_BASE_MODIFIER)
+//#define PLAYER_JUMP_SPEED_ADD_Y_MAX_TIME 0.5
+
+#if ENABLE_BACKWARDS_JUMP
+#define PLAYER_JUMP_SPEED_BACKWARD (btVector3(0, 11*3, 1)* PLAYER_SPEED_BASE_MODIFIER)
+#endif
+
+//#define PLAYER_WALL_JUMP_SPEED ((PLAYER_HIGH_JUMP_SPEED * 0.7 + btVector3(0, 55, 0)* PLAYER_SPEED_BASE_MODIFIER))
+#define PLAYER_WALL_JUMP_SPEED (btVector3(0, 9*3, PLAYER_MOVEMENT_SPEED / 2 + 1)* PLAYER_SPEED_BASE_MODIFIER)
+#define PLAYER_WALL_HIGH_JUMP_SPEED (PLAYER_HIGH_JUMP_SPEED)
+
+#if ENABLE_BACKWARDS_JUMP
+#define PLAYER_WALL_LONG_JUMP_SPEED (btVector3(0, PLAYER_JUMP_SPEED_STATIC.y() + 5.5, PLAYER_WALL_JUMP_SPEED.z() - 7.5))
+#endif
+
+#define PLAYER_LONG_JUMP_SPEED_MAX (PLAYER_HIGH_JUMP_SPEED.z() * 1.4)
+
+#if ENABLE_BACKWARDS_JUMP
+#define PLAYER_BACKWARDS_JUMP_SPEED_MAX (Math::Abs(PLAYER_JUMP_SPEED_BACKWARD.z()) * 7)
+#endif
+
+#define PLAYER_NORMAL_JUMP_SPEED_MAX PLAYER_HIGH_JUMP_SPEED.z() * 0.8
+/*(Math::Abs(PLAYER_JUMP_SPEED_MOVING.z()) * 1.4)*/
+//#define PLAYER_WALL_LONG_JUMP_SPEED (btVector3(0, PLAYER_JUMP_SPEED_STATIC.y(), PLAYER_WALL_JUMP_SPEED.z() + (PLAYER_WALL_HIGH_JUMP_SPEED.z() - PLAYER_WALL_JUMP_SPEED.z()) / 2))
+#define CAMERA_START_MENU_DISTANCE 100
+#define CAMERA_SPEED_MIN 2
+#define CAMERA_SPEED_MAX_INCREASE 12
+#define CAMERA_SPEED_KEY 13.5
+#define CAMERA_ZOOM_DISTANCE 20
+#define CAMERA_ZOOM_DEFAULT 10
+#define CAMERA_MAX_ANGLE_PITCH 80
+#define CAMERA_ZOOM_MIN (CAMERA_ZOOM_DEFAULT - CAMERA_ZOOM_DISTANCE)
+#define CAMERA_ZOOM_MAX (CAMERA_ZOOM_DEFAULT + CAMERA_ZOOM_DISTANCE * 2)
+#define JOYSTICK_MOVEMENT_MAX_AXIS 16
+#define DEADZONE 10000
+
+#if ENABLE_BACKWARDS_JUMP
+#define TIME_FOR_BACKWARDS_JUMP 0.18
+#endif
+
+// time to fall completely from respawn point
+#define PLATFORM_UPDATE_TIME_START (sqrt(2.0 * RESPAWN_Y_MARGIN / WORLD_GRAVITY))
+#define TIME_FOR_WALL_JUMP_AGAIN 0.05
+#define TIME_FOR_MOVEMENT_AFTER_WALL_JUMP 0.2
+#define PLAYER_WALL_JUMP_MAX_RANGE 8
+#define PLAYER_RESPAWN_TIME 0.5
+#define PLATFORM_SIZE_UNIT 5
+#define WORLD_SOUL_SIZE (Vector3(3, 3, 3))
+#define WORLD_ACTIVATOR_SIZE (Vector3(6, 6, 6))
+#define RESPAWN_Y_MARGIN 10
+#define SECONDS_WALL_JUMP_EFFECT 0.55
+#define JUMP_EFFECT_DIFFUSE_RGB 0.8, 0.0, 0.0
+#define SECONDS_LONG_JUMP_EFFECT SECONDS_WALL_JUMP_EFFECT
+#define SECONDS_NORMAL_JUMP_EFFECT SECONDS_LONG_JUMP_EFFECT
+
+#if ENABLE_BACKWARDS_JUMP
+#define SECONDS_HIGH_JUMP_EFFECT SECONDS_LONG_JUMP_EFFECT
+#endif
+
+#define SECONDS_AFTER_FALLING_EFFECT_SMALL 1.0
+#define SECONDS_AFTER_FALLING_EFFECT 1.2
+#define NORMAL_JUMP_DEGREE_EFFECT 80
+#define LONG_JUMP_DEGREE_EFFECT 45
+
+#if ENABLE_BACKWARDS_JUMP
+#define HIGH_JUMP_DEGREE_EFFECT 80
+#endif
+
+#define INFINITE_PLATFORMING_SKY_BOX_MARGIN 30
+
+// world editor
+#define CAMERA_CONTROLLER_SPEED PLAYER_MOVEMENT_SPEED * 6
+#define PLATFORM_TRANSLATE_SPEED 2.5
+#define INSERT_MATRIX_MAX_SIZE 8
+#define EDITOR_MIN_MARGIN_MATRIX 5
+#define ENABLE_EDITOR_MATRIX_HEIGHT 1
+#define EDITOR_DEFAULT_LINEAR_SPEED 10
+#define MAX_PLATFORMS_NUM 250
+#define INCREASE_SIZE_UNIT 2.5
+
+#define DEFAULT_WINDOW_WIDTH 854
+#define DEFAULT_WINDOW_HEIGHT 480
+#define MIN_WINDOW_WIDTH 854
+#define MIN_WINDOW_HEIGHT 480
+
+// monsters
+#define COMET_LAUNCHER_TIME_TO_LAUNCH 4.0
+#define COMET_LAUNCHER_COMET_SPEED 20
+#define COMET_LAUNCHER_ROTATIONS_PER_LAUNCH 2
+#define COMET_LAUNCHER_LIFE_SPAN 10.0
+
+// black king
+#define BLACK_KING_HALF_SIZE btVector3(2.5, 6.5, 2.5)
+#define BLACK_KING_ORIGIN btVector3(0, (BLACK_KING_HALF_SIZE.y() + 900), 100)
+#define BLACK_KING_DOWN_SWORD_SIZE btVector3(0.5, 3.5, 0.5)
+#define BLACK_KING_SPEED 7
+#define BLACK_KING_ANGLE_MIN 60
+#define BLACK_KING_ROTATE_SPEED 70
+#define BLACK_KING_MIN_DISTANCE 8
+#define BLACK_KING_MIN_DISTANCE_THUNDER_UP 10
+/// horizontal is (100 - BLACK_KIN_PERCENTAGE_ATTACK_VERTICAL)
+#define BLACK_KIN_PERCENTAGE_ATTACK_VERTICAL 30
+#define BLACK_KING_MIN_TIME_THUNDER_UP 1.5
+
+// holy marble
+#define HOLY_MARBLE_HALF_SIZE btVector3(6, 12, 6)
+#define HOLY_MARBLE_ORIGIN (btVector3(150, 303.5 + HOLY_MARBLE_HALF_SIZE.y(), -345))
+
+// ogre-related strings
+#define SCENE_MANAGER_NAME "default"
+#define OVERLAY_DEATH_CAM "overlay-death-cam"
+#define CONFIG_FILENAME "config.json"
+#define STATS_FILENAME "stats.json"
+
+// sound
+#define SOUND_MIN_DISTANCE 5
+#define SOUND_MAX_DISTANCE 100
+
+// misc
+#define INFINITE_PLATFORMER_CREATOR "pacha"
+#define INFINITE_PLATFORMER_NAME "Infinite platforming"
+#define INFINITE_PLATFORMER_DESCRIPTION "Infinite platforming"
+#define INFINITE_PLATFORMER_GROUP "Infinite platforming"
+#define TO_OGRE(x) BtOgre::Convert::toOgre((x))
+#define TO_BULLET(x) BtOgre::Convert::toBullet((x))
+#define SEED_RAND() srand(time(0));srand((rand() % RAND_MAX) * time(0));
+#define RANGE_RANDOM_FLOAT(min, max) (Math::RangeRandom(min, max))
+#define RANGE_RANDOM(min, max) Math::IFloor(Math::RangeRandom(min, max + 0.999999))
+#define HEX_TO_COLOR_VALUE(r, g, b) r/255.0, g/255.0, b/255.0
+
+#define COMMA ,
+#if _DEBUG
+#define DEBUG_PRINT(id, text, args) TextRenderer::getSingleton().printf(String("textbox-") + Ogre::StringConverter::toString(id), #text, args);
+#define DEBUG_PRINT_CLEAR(id) TextRenderer::getSingleton().printf(String("textbox-") + Ogre::StringConverter::toString(id), "");
+#define DEBUG_PRINT_VECTOR_3(id, vector) TextRenderer::getSingleton().printf(String("textbox-") + Ogre::StringConverter::toString(id), "X: %.5f Y: %.5f Z: %.5f", (vector).x, (vector).y, (vector).z);
+#else
+#define DEBUG_PRINT(id, text, args)
+#define DEBUG_PRINT_VECTOR_3(id, vector)
+#define DEBUG_PRINT_CLEAR(id) 
+#endif
+
+// map format
+#define MAP_NAME_MAX_LENGTH 32
+#define MAP_DESCRIPTION_MAX_LENGTH 256
+#define MAP_CREATOR_MAX_LENGTH 32
+#define MAP_MAX_TIME (5*60)/* 5 minutes */
+
+class MapFormat;
+
+// general functions used globally
+String requestNewParticleName();
+String requestNewStaticGeometryName();
+String requestNewPlatformBorderName();
+String requestNewRandomMaterialName();
+String requestNewEntityName();
+String timeToString(int seconds);
+String generateWindowTitle(int fps);
+//bool normalIsStandableSlope(btVector3&);
+bool normalIsStandable(const btVector3&);
+bool normalValidWallJump(const btVector3&);
+Vector3 reflectVector3(Vector3, Vector3);
+Real fixAngleNumber(Real);
+MapFormat* getRandomStartMenuMap();
+MapFormat* getTutorialMap(int number);
+
+#define NEW_GAME(x) 
